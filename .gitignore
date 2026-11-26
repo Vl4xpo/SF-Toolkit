@@ -1,0 +1,29 @@
+# Ignorar los logs por precaucion 
+# Para evitar ya saben
+logs/*.log
+!logs/.gitkeep
+
+# Lo de local y temporal
+*.tmp
+*.temp
+*.offset
+*.swp
+*.swo
+*~
+
+# Para archivos de respaldo 
+# En si por si acaso van probando xd
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+*.key
+*.pem
+
+# Archivos del sistema
+# Ademas de editor por s acaso
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
