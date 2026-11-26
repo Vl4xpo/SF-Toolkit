@@ -1,4 +1,4 @@
-# Ignorar los logs por precaucion 
+# Ignorar los logs por precaucion
 # Para evitar ya saben
 logs/*.log
 !logs/.gitkeep
@@ -11,7 +11,7 @@ logs/*.log
 *.swo
 *~
 
-# Para archivos de respaldo 
+# Para archivos de respaldo
 # En si por si acaso van probando xd
 *.tar
 *.tar.gz
