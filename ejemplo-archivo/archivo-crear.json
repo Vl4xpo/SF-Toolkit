@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "username": "name",
+      "groups": "grupo1,grupo2",
+      "create_home": true
+    },
+    {
+      "username": "name2",
+      "groups": "grupo1,grupo2",
+      "create_home": false
+    }
+  ]
+}
