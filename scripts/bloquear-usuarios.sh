@@ -26,7 +26,10 @@ leyendo_archivo(){
     jq -r '.users[] | [.username] | @tsv' "$archivo"
 }
 
-
+# La ejecucion para validaciones
+validar_logint "$logs_interno"
+validar_archivo_json "$archivo" "$logs_interno" || exit 1
+validar_json_esquema_bloquear  "$archivo" "$logs_interno" || exit 1
 # EJecucion del bloqueado y lectura de usuarios
 errores=0
 while IFS= read -r username; do
