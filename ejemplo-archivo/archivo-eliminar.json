@@ -1,0 +1,10 @@
+{
+  "users": [
+    { "username": "name",
+      "delete_home": true
+    },
+    { "username": "name2",
+      "delete_home": false
+    }
+  ]
+}

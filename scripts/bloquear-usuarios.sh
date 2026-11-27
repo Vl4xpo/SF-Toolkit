@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 
 archivo="$1"
-UBICACION_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]})")" && pwd)"
+UBICACION_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 UBICACION_TRABAJO="$(dirname "$UBICACION_SCRIPT")"
 FECHA="$(date +'%Y-%m-%d-%H:%M:%S')"
 
@@ -36,7 +36,7 @@ while IFS= read -r username; do
     # Valida si existe o no pero sigue cada usuario del json
     if ! usuario_existe "$username"; then
         printf "%s - ERROR - El usuario (%s) no existe\n" "$FECHA" "$username" 2>&1 | tee -a "$logs_archivo"
-        ((errores++))
+        ((errores++)) || true
         continue
     fi
 
@@ -46,7 +46,7 @@ while IFS= read -r username; do
         continue
     else
         printf "%s - FATAL - Error a bloquear el usuario (%s)\n" "$FECHA" "$username" 2>&1 | tee -a "$logs_archivo"
-        ((errores++))
+        ((errores++)) || true
         continue
     fi
 done < <(leyendo_archivo "$archivo")

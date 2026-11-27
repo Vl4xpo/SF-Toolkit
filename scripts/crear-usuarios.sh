@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 
 archivo="$1"
-UBICACION_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]})")" && pwd)"
+UBICACION_SCRIPT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 UBICACION_TRABAJO="$(dirname "$UBICACION_SCRIPT")"
 FECHA="$(date +'%Y-%m-%d-%H:%M:%S')"
 
@@ -76,11 +76,14 @@ while IFS=$'\t' read -r username groups create_home; do
     # En si aplica esto
     # useradd (-m ó -M) -G (grupos) usuario
     sudo useradd "${args[@]}" "$username"
-    # Para cambiarlo en el primer login
-    sudo chage -d 0 "$username"
-    printf "Atencion - Contraseña Temporal Generada: %s:%s" "$username" "$contrasena"
+
+    printf "Atencion - Contraseña Temporal Generada : Usuario (%s) - Contrasena: %s\n" "$username" "$contrasena"
     printf "%s:%s\n" "$username" "$contrasena" | sudo chpasswd
     printf "%s - OK - Usuario(%s) creado exitosamente\n" "$FECHA" "$username" 2>&1 | tee -a "$logs_archivo"
+    # Para cambiarlo en el primer login
+    sudo chage -d 0 "$username"
+    unset "contrasena"
 done < <(leyendo_archivo "$archivo")
 printf "OJO - No se olvide de cambiar la contrasena en el primer login\n"
+printf "NOTA: La contrasena solo aparace en la shell generada (stdout) no olvide la contrasena generada en caso use un administrador para cambiarla\n"
 exit 0
