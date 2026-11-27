@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 # Funcion para validar la carpeta logs interna
 # Para los scripts
 validar_logint(){

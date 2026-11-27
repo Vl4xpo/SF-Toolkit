@@ -14,17 +14,7 @@ declare logs_archivo="$logs_interno/gestion_usuarios.log"
 # Ruta para agregar las funciones
 source "$ruta_funciones/config/validador_json.sh"
 source "$ruta_funciones/config/validador_logsinterno.sh"
-
-# Funcion solo para validar si existe el usuario previo
-usuario_existe(){
-    getent passwd "$1" >/dev/null 2>&1
-}
-
-leyendo_archivo(){
-    local archivo="$1"
-    jq -r '.users[] | [.username, (.delete_home // false)] | @tsv' "$archivo"
-}
-
+source "$ruta_funciones/config/validador_usuario.sh"
 
 # La ejecucion para validaciones JSON
 validar_logint "$logs_interno"
@@ -68,4 +58,4 @@ while IFS=$'\t' read -r username delete_home; do
     else
         printf "%s - ERROR - AL eliminar el Usuario (%s)\n" "$FECHA" "$username" 2>&1 | tee -a "$logs_archivo"
     fi
-done < <(leyendo_archivo "$archivo")
+done < <(leer_json_eliminar "$archivo")

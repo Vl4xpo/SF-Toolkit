@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 set -Eeuo pipefail
 
@@ -14,17 +14,7 @@ declare logs_archivo="$logs_interno/gestion_usuarios.log"
 # Ruta para agregar las funciones
 source "$ruta_funciones/config/validador_json.sh"
 source "$ruta_funciones/config/validador_logsinterno.sh"
-
-# Funcion solo para validar si existe el usuario previo
-usuario_existe(){
-    getent passwd "$1" >/dev/null 2>&1
-}
-
-# Funcion para consultar el json
-leyendo_archivo(){
-    local archivo="$1"
-    jq -r '.users[] | [.username] | @tsv' "$archivo"
-}
+source "$ruta_funciones/config/validador_usuario.sh"
 
 # La ejecucion para validaciones
 validar_logint "$logs_interno"
@@ -49,7 +39,7 @@ while IFS= read -r username; do
         ((errores++)) || true
         continue
     fi
-done < <(leyendo_archivo "$archivo")
+done < <(leer_json_bloquear "$archivo")
 if [[ "$errores" -gt 0 ]]; then
     printf "Hubo: %s - de errores al bloquear usuarios en el JSON.\nFinalizacion dudodas consulte los logs (%s)\n" "$errores" "$logs_archivo"
     printf "%s - WARNING - Hubo algunos errores al bloquear usuarios\n" "$FECHA"  2>&1 | tee -a "$logs_archivo"

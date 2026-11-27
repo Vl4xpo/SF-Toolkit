@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # Funciones de validar JSON
 validar_archivo_json() {
@@ -64,4 +64,23 @@ validar_json_esquema_eliminar(){
         printf "%s - FATAL - Esquema del JSON INVALIDO\n" "$FECHA" 2>&1 | tee -a "$logs_archivo"
         return 1
     fi
+}
+
+# Funciones para leer
+# Esta en si es para leer en crear
+leer_json_crear() {
+    local archivo="$1"
+    jq -r '.users[] | [.username, (.groups // ""), (.create_home // false)] | @tsv' "$archivo"
+}
+
+# Esta leer la de bloquear
+leer_json_bloquear() {
+    local archivo="$1"
+    jq -r '.users[] | [.username] | @tsv' "$archivo"
+}
+
+# Esta lee la de eliminar
+leer_json_eliminar() {
+    local archivo="$1"
+    jq -r '.users[] | [.username, (.delete_home // false)] | @tsv' "$archivo"
 }

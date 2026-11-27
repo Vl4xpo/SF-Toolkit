@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 set -Eeuo pipefail
 
@@ -14,11 +14,7 @@ declare logs_archivo="$logs_interno/gestion_usuarios.log"
 # Ruta para agregar las funciones
 source "$ruta_funciones/config/validador_json.sh"
 source "$ruta_funciones/config/validador_logsinterno.sh"
-
-leyendo_archivo(){
-    local archivo="$1"
-    jq -r '.users[] | [.username, (.groups // ""), (.create_home // false)]| @tsv' "$archivo"
-}
+source "$ruta_funciones/config/validador_usuario.sh"
 
 # Esta funcion crea la contrasena temporal
 # Con un numero maximo de 16 bytes o char
@@ -33,12 +29,6 @@ generar_password_temporal(){
                 return 0
             fi
         done
-}
-
-# Solo es una funcion
-# Para ver si existe
-usuario_existe() {
-    getent passwd "$1" >/dev/null 2>&1
 }
 
 # La ejecucion para validaciones
@@ -83,7 +73,7 @@ while IFS=$'\t' read -r username groups create_home; do
     # Para cambiarlo en el primer login
     sudo chage -d 0 "$username"
     unset "contrasena"
-done < <(leyendo_archivo "$archivo")
+done < <(leer_json_crear "$archivo")
 printf "OJO - No se olvide de cambiar la contrasena en el primer login\n"
 printf "NOTA: La contrasena solo aparace en la shell generada (stdout) no olvide la contrasena generada en caso use un administrador para cambiarla\n"
 exit 0
