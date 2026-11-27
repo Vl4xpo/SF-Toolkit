@@ -2,8 +2,11 @@
 
 # Una funcion para generar logs hacia la ubicacion
 # Usando "tee -a"
-# En si seria
-# log_mensaje "NIVEL" "UBICACION" "MENSAJE"
+
+# El log es aprox:
+# (FECHA) - (NIVEL) - (NOMBRE-SCRIPT) - (USUARIO EJECUTOR) - (USUARIO-EFECTIVO) - (MENSAJE)
+# y Lo guarda en la ubicacion de logs
+
 log_mensaje(){
     # Para capturar y luego todo lo mensaje o arg siguiente leerlos aprox
     local nivel="$1"
