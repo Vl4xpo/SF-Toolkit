@@ -39,3 +39,16 @@ validar_json_esquema() {
         return 1
     fi
 }
+
+validar_json_esquema_bloquear(){
+    local archivo="$1"
+    local logs_interno="$2"
+    local logs_archivo="$logs_interno/gestion_usuarios.log"
+    if jq -e '(.users | type == "array") and (.users | length > 0) and all(.users[]; (.username | type == "string") and (.username | test("^[a-z_][a-z0-9_-]{0,31}$")))' "$archivo" >/dev/null 2>&1; then
+        printf "%s - INFO - Esquema del JSON validado\n" "$FECHA" 2>&1 | tee -a "$logs_archivo"
+        return 0
+    else
+        printf "%s - FATAL - Esquema del JSON INVALIDO\n" "$FECHA" 2>&1 | tee -a "$logs_archivo"
+        return 1
+    fi
+}
