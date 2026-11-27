@@ -3,14 +3,17 @@
 # Para los scripts
 validar_logint(){
     local logs_interno="$1"
-    local logs_archivo="$logs_interno/gestion_usuarios.log"
+    local logs_archivo="$2"
+    local nombre_script="$3"
+    local usuario_ejecutor="$4"
+    local usuario_efectivo="$5"
     if [[ -d "$logs_interno" ]] && [[ -r "$logs_interno" ]] && [[ -w "$logs_interno" ]]; then
-        printf "%s - INFO - Validando carpeta logs existente\n" "$FECHA" 2>&1 | tee -a "$logs_archivo"
+        log_mensaje "DEBUG" "$logs_archivo" "$nombre_script" "$usuario_ejecutor" "$usuario_efectivo" "Validando carpeta logs existente ruta y permisos existosamente"
         return 0
     else
         mkdir -p "$logs_interno"
-        printf "%s - WARNING - Carpeta '/logs' no creada\n" "$FECHA" 2>&1 | tee -a "$logs_archivo"
-        printf "%s - INFO - Se ha creado carpeta ubicacion: ('%s')\n" "$FECHA"  "$logs_interno" 2>&1 | tee -a "$logs_archivo"
+        log_mensaje "WARNING" "$logs_archivo" "$nombre_script" "$usuario_ejecutor" "$usuario_efectivo" "Carpeta '/logs' no creada"
+        log_mensaje "INFO" "$logs_archivo" "$nombre_script" "$usuario_ejecutor" "$usuario_efectivo" "Se ha creado carpeta ubicacion"
         return 0
     fi
 }
