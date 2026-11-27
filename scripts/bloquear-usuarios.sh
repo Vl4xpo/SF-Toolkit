@@ -25,7 +25,7 @@ source "$ruta_funciones/config/validador_usuario.sh"
 # La ejecucion para validaciones
 validar_logint "$logs_interno" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo"
 validar_archivo_json "$archivo" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo" || exit 1
-validar_json_esquema_eliminar "$archivo" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo" || exit 1
+validar_json_esquema_bloquear "$archivo" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo" || exit 1
 # EJecucion del bloqueado y lectura de usuarios
 errores=0
 while IFS= read -r username; do

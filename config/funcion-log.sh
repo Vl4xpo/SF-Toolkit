@@ -14,7 +14,7 @@ log_mensaje(){
     local nombre_script="$3"
     local usuario="$4"
     local usuario_efectivo="$5"
-    shift
+    shift 5
     local mensaje="$*"
     local fecha_actual
     fecha_actual="$(date +'%Y-%m-%d-%H:%M:%S')"

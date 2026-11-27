@@ -41,7 +41,7 @@ generar_password_temporal(){
 # Si alguno da un return diferente da exit 1 o error digamoslo
 validar_logint "$logs_interno" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo"
 validar_archivo_json "$archivo" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo" || exit 1
-validar_json_esquema_eliminar "$archivo" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo" || exit 1
+validar_json_esquema "$archivo" "$logs_archivo" "$NOMBRE_SCRIPT" "$USUARIO_SESION" "$usuario_efectivo" || exit 1
 
 # La lectura
 # Y ejecucion - creacion de usuario con sus parametros dados
