@@ -1,4 +1,4 @@
-# Scripts de gestion
+# Scripts de gestión
 Estos scripts permiten el desarrollo de tareas con la finalidad
 de resolver problemas o facilitar procesos. 
 *Digamos - agrupados como una toolkit basica*
